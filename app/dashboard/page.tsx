@@ -32,24 +32,18 @@ const RECENT_ACTIVITY = [
     type: "course",
     title: "Завершил курс 'Основы программирования'",
     time: "2 часа назад",
-    icon: "🎓",
-    color: "bg-green-100 text-green-700",
   },
   {
     id: 2,
     type: "forum",
     title: "Создал пост в форуме 'Математика'",
     time: "5 часов назад",
-    icon: "💬",
-    color: "bg-blue-100 text-blue-700",
   },
   {
     id: 3,
     type: "friend",
     title: "Добавил в друзья Аlex из 12A",
     time: "1 день назад",
-    icon: "👥",
-    color: "bg-purple-100 text-purple-700",
   },
 ]
 
@@ -64,14 +58,14 @@ export default function DashboardPage() {
   const router = useRouter()
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-purple-50">
+    <div className="min-h-screen bg-white">
       {/* Навигация */}
-      <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b">
+      <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 ignite-gradient rounded-2xl flex items-center justify-center">
-                <span className="text-lg font-bold text-white">🔥</span>
+              <div className="w-10 h-10 bg-black rounded-md flex items-center justify-center">
+                <span className="text-lg font-bold text-white">IP</span>
               </div>
               <div>
                 <span className="font-bold text-gray-900 text-lg">IgnitePride</span>
@@ -80,16 +74,16 @@ export default function DashboardPage() {
             </div>
 
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="rounded-xl">
+              <Button variant="ghost" size="sm" className="rounded-md">
                 <Search className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="rounded-xl">
+              <Button variant="ghost" size="sm" className="rounded-md">
                 <Bell className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="sm" onClick={() => router.push("/chat")} className="rounded-xl">
+              <Button variant="ghost" size="sm" onClick={() => router.push("/chat")} className="rounded-md">
                 <MessageSquare className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="rounded-xl">
+              <Button variant="ghost" size="sm" className="rounded-md">
                 <Settings className="w-5 h-5" />
               </Button>
             </div>
@@ -102,15 +96,15 @@ export default function DashboardPage() {
           {/* Левая колонка - Статистика */}
           <div className="space-y-6">
             {/* Приветствие */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
-                  <Avatar className="w-16 h-16 border-4 border-white shadow-lg">
+                  <Avatar className="w-16 h-16 border-2 border-gray-200">
                     <AvatarImage src="/placeholder.svg?height=64&width=64" />
-                    <AvatarFallback className="ignite-gradient text-white text-xl font-bold">И</AvatarFallback>
+                    <AvatarFallback className="bg-gray-200 text-gray-800 text-xl font-bold">И</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h2 className="text-xl font-bold">Привет, Ажар!</h2>
+                    <h2 className="text-xl font-bold text-gray-900">Привет, Ажар!</h2>
                     <p className="text-gray-600">Готов к новым знаниям?</p>
                   </div>
                 </div>
@@ -118,51 +112,51 @@ export default function DashboardPage() {
             </Card>
 
             {/* Статистика обучения */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-orange-500" />
-                  Твой прогресс 📊
+                  <TrendingUp className="w-5 h-5 text-gray-700" />
+                  Твой прогресс
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 bg-green-50 rounded-xl">
-                    <div className="text-2xl font-bold text-green-600">{LEARNING_STATS.coursesCompleted}</div>
-                    <div className="text-sm text-green-700">Курсов пройдено</div>
+                  <div className="text-center p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <div className="text-2xl font-bold text-gray-900">{LEARNING_STATS.coursesCompleted}</div>
+                    <div className="text-sm text-gray-600">Курсов пройдено</div>
                   </div>
-                  <div className="text-center p-3 bg-orange-50 rounded-xl">
-                    <div className="text-2xl font-bold text-orange-600">{LEARNING_STATS.studyStreak}</div>
-                    <div className="text-sm text-orange-700">Дней подряд</div>
+                  <div className="text-center p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <div className="text-2xl font-bold text-gray-900">{LEARNING_STATS.studyStreak}</div>
+                    <div className="text-sm text-gray-600">Дней подряд</div>
                   </div>
-                  <div className="text-center p-3 bg-blue-50 rounded-xl">
-                    <div className="text-2xl font-bold text-blue-600">{LEARNING_STATS.forumPosts}</div>
-                    <div className="text-sm text-blue-700">Постов в форуме</div>
+                  <div className="text-center p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <div className="text-2xl font-bold text-gray-900">{LEARNING_STATS.forumPosts}</div>
+                    <div className="text-sm text-gray-600">Постов в форуме</div>
                   </div>
-                  <div className="text-center p-3 bg-purple-50 rounded-xl">
-                    <div className="text-2xl font-bold text-purple-600">{LEARNING_STATS.friendsCount}</div>
-                    <div className="text-sm text-purple-700">Друзей</div>
+                  <div className="text-center p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <div className="text-2xl font-bold text-gray-900">{LEARNING_STATS.friendsCount}</div>
+                    <div className="text-sm text-gray-600">Друзей</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Последняя активность */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-blue-500" />
-                  Последняя активность 📝
+                  <Calendar className="w-5 h-5 text-gray-700" />
+                  Последняя активность
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {RECENT_ACTIVITY.map((activity) => (
-                  <div key={activity.id} className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${activity.color}`}>
-                      <span className="text-sm">{activity.icon}</span>
+                  <div key={activity.id} className="flex items-start gap-3 p-3 bg-gray-50 border border-gray-200 rounded-md">
+                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-gray-600">{activity.id}</span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{activity.title}</p>
+                      <p className="text-sm font-medium text-gray-900">{activity.title}</p>
                       <p className="text-xs text-gray-500">{activity.time}</p>
                     </div>
                   </div>
@@ -177,28 +171,28 @@ export default function DashboardPage() {
             <div className="grid grid-cols-2 gap-4">
               <Button
                 onClick={() => router.push("/forum")}
-                className="h-24 ignite-gradient hover:opacity-90 rounded-2xl flex flex-col items-center justify-center gap-2"
+                className="h-24 bg-white border border-black text-black hover:bg-gray-50 rounded-md flex flex-col items-center justify-center gap-2"
               >
                 <MessageSquare className="w-8 h-8" />
                 <span className="font-semibold">Форум</span>
               </Button>
               <Button
                 onClick={() => router.push("/courses")}
-                className="h-24 learning-gradient hover:opacity-90 rounded-2xl flex flex-col items-center justify-center gap-2"
+                className="h-24 bg-white border border-black text-black hover:bg-gray-50 rounded-md flex flex-col items-center justify-center gap-2"
               >
                 <BookOpen className="w-8 h-8" />
                 <span className="font-semibold">Курсы</span>
               </Button>
               <Button
                 onClick={() => router.push("/study-groups")}
-                className="h-24 pride-gradient hover:opacity-90 rounded-2xl flex flex-col items-center justify-center gap-2"
+                className="h-24 bg-white border border-black text-black hover:bg-gray-50 rounded-md flex flex-col items-center justify-center gap-2"
               >
                 <Users className="w-8 h-8" />
                 <span className="font-semibold">Группы</span>
               </Button>
               <Button
                 onClick={() => router.push("/discover")}
-                className="h-24 knowledge-gradient hover:opacity-90 rounded-2xl flex flex-col items-center justify-center gap-2"
+                className="h-24 bg-white border border-black text-black hover:bg-gray-50 rounded-md flex flex-col items-center justify-center gap-2"
               >
                 <Users className="w-8 h-8" />
                 <span className="font-semibold">Знакомства</span>
@@ -206,42 +200,42 @@ export default function DashboardPage() {
             </div>
 
             {/* Рекомендуемые курсы */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Brain className="w-5 h-5 text-purple-500" />
-                  Рекомендуемые курсы 🎯
+                  <Brain className="w-5 h-5 text-gray-700" />
+                  Рекомендуемые курсы
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
-                  <div className="p-4 border border-gray-200 rounded-xl hover:border-orange-300 transition-colors cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-md hover:border-gray-300 transition-colors cursor-pointer">
                     <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                        <span className="text-xl">💻</span>
+                      <div className="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center">
+                        <span className="text-xl text-gray-600">P</span>
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold">Python для начинающих</h3>
+                        <h3 className="font-semibold text-gray-900">Python для начинающих</h3>
                         <p className="text-sm text-gray-600">Изучи основы программирования</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <Badge className="bg-blue-100 text-blue-700">Программирование</Badge>
-                          <span className="text-xs text-gray-500">4.8 ⭐ • 2.3k студентов</span>
+                          <Badge className="bg-gray-100 text-gray-800 border border-gray-300">Программирование</Badge>
+                          <span className="text-xs text-gray-500">4.8 • 2.3k студентов</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="p-4 border border-gray-200 rounded-xl hover:border-orange-300 transition-colors cursor-pointer">
+                  <div className="p-4 border border-gray-200 rounded-md hover:border-gray-300 transition-colors cursor-pointer">
                     <div className="flex items-start gap-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
-                        <span className="text-xl">🧮</span>
+                      <div className="w-12 h-12 bg-gray-200 rounded-md flex items-center justify-center">
+                        <span className="text-xl text-gray-600">M</span>
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold">Математика SAT 2025</h3>
+                        <h3 className="font-semibold text-gray-900">Математика SAT 2025</h3>
                         <p className="text-sm text-gray-600">Подготовка к экзамену</p>
                         <div className="flex items-center gap-2 mt-2">
-                          <Badge className="bg-green-100 text-green-700">Математика</Badge>
-                          <span className="text-xs text-gray-500">4.9 ⭐ • 1.8k студентов</span>
+                          <Badge className="bg-gray-100 text-gray-800 border border-gray-300">Математика</Badge>
+                          <span className="text-xs text-gray-500">4.9 • 1.8k студентов</span>
                         </div>
                       </div>
                     </div>
@@ -254,25 +248,25 @@ export default function DashboardPage() {
           {/* Правая колонка - Трендовые темы */}
           <div className="space-y-6">
             {/* Трендовые темы форума */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Fire className="w-5 h-5 text-red-500" />
-                  Горячие темы 🔥
+                  <Fire className="w-5 h-5 text-gray-700" />
+                  Горячие темы
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {TRENDING_TOPICS.map((topic, index) => (
                   <div
                     key={index}
-                    className="p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors cursor-pointer"
+                    className="p-3 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="font-medium text-sm">{topic.name}</h4>
+                        <h4 className="font-medium text-sm text-gray-900">{topic.name}</h4>
                         <p className="text-xs text-gray-500">{topic.posts} постов</p>
                       </div>
-                      <Badge className="bg-red-100 text-red-700 text-xs">{topic.trend}</Badge>
+                      <Badge className="bg-gray-100 text-gray-800 border border-gray-300 text-xs">{topic.trend}</Badge>
                     </div>
                   </div>
                 ))}
@@ -280,11 +274,11 @@ export default function DashboardPage() {
             </Card>
 
             {/* Онлайн друзья */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-gray-200 bg-white">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-green-500" />
-                  Друзья онлайн 🟢
+                  <Users className="w-5 h-5 text-gray-700" />
+                  Друзья онлайн
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -295,16 +289,16 @@ export default function DashboardPage() {
                 ].map((friend, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-xl transition-colors cursor-pointer"
+                    className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-md transition-colors cursor-pointer"
                   >
                     <div className="relative">
-                      <Avatar className="w-10 h-10">
-                        <AvatarFallback className="pride-gradient text-white font-bold">{friend.avatar}</AvatarFallback>
+                      <Avatar className="w-10 h-10 border border-gray-300">
+                        <AvatarFallback className="bg-gray-200 text-gray-800 font-bold">{friend.avatar}</AvatarFallback>
                       </Avatar>
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-gray-500 border-2 border-white rounded-full"></div>
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-sm">{friend.name}</p>
+                      <p className="font-medium text-sm text-gray-900">{friend.name}</p>
                       <p className="text-xs text-gray-500">{friend.subject}</p>
                     </div>
                   </div>
@@ -313,15 +307,17 @@ export default function DashboardPage() {
             </Card>
 
             {/* Мотивационная карточка */}
-            <Card className="border-0 shadow-lg bg-gradient-to-r from-orange-500 to-red-500 text-white">
+            <Card className="border border-gray-200 bg-white">
               <CardContent className="p-6 text-center">
-                <div className="text-4xl mb-3">🎯</div>
-                <h3 className="font-bold text-lg mb-2">Цель недели</h3>
-                <p className="text-sm opacity-90 mb-4">Пройди 3 урока по математике</p>
-                <div className="w-full bg-white/20 rounded-full h-2 mb-3">
-                  <div className="bg-white h-2 rounded-full" style={{ width: "60%" }}></div>
+                <div className="w-12 h-12 bg-gray-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+                  <span className="text-xl text-gray-600">T</span>
                 </div>
-                <p className="text-xs opacity-75">2 из 3 уроков завершено</p>
+                <h3 className="font-bold text-lg mb-2 text-gray-900">Цель недели</h3>
+                <p className="text-sm text-gray-600 mb-4">Пройди 3 урока по математике</p>
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+                  <div className="bg-gray-600 h-2 rounded-full" style={{ width: "60%" }}></div>
+                </div>
+                <p className="text-xs text-gray-500">2 из 3 уроков завершено</p>
               </CardContent>
             </Card>
           </div>
