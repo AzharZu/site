@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, Search, Play, Clock, Users, Star, BookOpen, Award, Filter, TrendingUp } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BottomNavigation } from "@/components/navigation/bottom-nav"
 
 // Моковые данные курсов
 const COURSES = [
@@ -301,6 +302,7 @@ export default function CoursesPage() {
           </div>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   )
 }

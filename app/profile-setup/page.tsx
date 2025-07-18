@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Camera, X, User, MapPin, GraduationCap, Heart, Star } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BottomNavigation } from "@/components/navigation/bottom-nav"
 
 const TEEN_INTERESTS = [
   { name: "Игры", emoji: "🎮", category: "развлечения" },
@@ -46,7 +47,29 @@ export default function ProfileSetupPage() {
     bio: "",
     avatar: "",
   })
+  const [uploadedPhotos, setUploadedPhotos] = useState<string[]>([])
   const router = useRouter()
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const photoPromises = Array.from(files).map(file => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader()
+          reader.onload = (e) => resolve(e.target?.result as string)
+          reader.readAsDataURL(file)
+        })
+      })
+      
+      Promise.all(photoPromises).then(photos => {
+        setUploadedPhotos(prev => [...prev, ...photos].slice(0, 6)) // Максимум 6 фото
+      })
+    }
+  }
+
+  const removePhoto = (index: number) => {
+    setUploadedPhotos(prev => prev.filter((_, i) => i !== index))
+  }
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -77,50 +100,89 @@ export default function ProfileSetupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-50 to-cyan-100">
+    <div className="min-h-screen bg-neutral-50">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
-              <span className="text-6xl">🎨</span>
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-2">
-              Создай свой профиль!
+            <h1 className="text-4xl font-bold text-neutral-900 mb-2">
+              Создай свой профиль
             </h1>
-            <p className="text-gray-600 text-lg">Расскажи о себе, чтобы найти классных друзей 🌟</p>
+            <p className="text-neutral-600 text-lg">Расскажи о себе, чтобы найти классных друзей</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Фото профиля */}
-            <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
+            <Card className="border border-neutral-200 shadow-sm bg-white">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <Camera className="w-6 h-6 text-purple-500" />
-                  Твое фото 📸
+                <CardTitle className="flex items-center gap-2 text-xl text-neutral-900">
+                  <Camera className="w-6 h-6 text-neutral-600" />
+                  Твои фотографии
                 </CardTitle>
-                <CardDescription>Добавь крутое фото, чтобы друзья тебя узнали!</CardDescription>
+                <CardDescription>Добавь до 6 фотографий, чтобы показать свою личность</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col items-center space-y-4">
-                  <div className="relative">
-                    <Avatar className="w-32 h-32 border-4 border-white shadow-lg">
-                      <AvatarImage src={profileData.avatar || "/placeholder.svg?height=128&width=128"} />
-                      <AvatarFallback className="text-3xl bg-gradient-to-br from-purple-400 to-blue-400 text-white">
-                        <User className="w-16 h-16" />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="absolute -bottom-2 -right-2 w-10 h-10 cool-gradient rounded-full flex items-center justify-center">
-                      <span className="text-lg">✨</span>
-                    </div>
+                <div className="space-y-4">
+                  {/* Сетка фотографий */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <div key={index} className="aspect-square relative">
+                        {uploadedPhotos[index] ? (
+                          <div className="relative w-full h-full">
+                            <img 
+                              src={uploadedPhotos[index]} 
+                              alt={`Фото ${index + 1}`}
+                              className="w-full h-full object-cover rounded-lg border-2 border-gray-200"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removePhoto(index)}
+                              className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="w-full h-full bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-gray-400 transition-colors">
+                            <div className="text-center">
+                              <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                              <span className="text-sm text-gray-500">Добавить фото</span>
+                            </div>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              multiple
+                              onChange={handlePhotoUpload}
+                              className="hidden"
+                            />
+                          </label>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <Button
-                    variant="outline"
-                    type="button"
-                    className="rounded-xl border-2 hover:border-purple-400 bg-transparent"
-                  >
-                    <Camera className="w-4 h-4 mr-2" />
-                    Загрузить фото
-                  </Button>
+                  
+                  {/* Кнопка загрузки */}
+                  <div className="text-center">
+                    <label className="cursor-pointer">
+                      <Button
+                        variant="outline"
+                        type="button"
+                        className="rounded-lg border-2 border-neutral-200 hover:border-neutral-400 bg-transparent"
+                        asChild
+                      >
+                        <span>
+                          <Camera className="w-4 h-4 mr-2" />
+                          Загрузить ещё фото
+                        </span>
+                      </Button>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -264,6 +326,7 @@ export default function ProfileSetupPage() {
           </form>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   )
 }

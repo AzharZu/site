@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, MessageCircle, Heart, Star, Calendar } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BottomNavigation } from "@/components/navigation/bottom-nav"
 
 // Моковые данные матчей
 const MATCHES = [
@@ -207,6 +208,7 @@ export default function MatchesPage() {
           )}
         </div>
       </div>
+      <BottomNavigation />
     </div>
   )
 }

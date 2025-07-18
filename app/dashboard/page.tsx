@@ -16,6 +16,7 @@ import {
   Brain,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BottomNavigation } from "@/components/navigation/bottom-nav"
 
 // Моковые данные для дашборда
 const LEARNING_STATS = {
@@ -109,7 +110,7 @@ export default function DashboardPage() {
                     <AvatarFallback className="ignite-gradient text-white text-xl font-bold">И</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h2 className="text-xl font-bold">Привет, Иван! 👋</h2>
+                    <h2 className="text-xl font-bold">Привет, Ажар!</h2>
                     <p className="text-gray-600">Готов к новым знаниям?</p>
                   </div>
                 </div>
@@ -326,6 +327,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   )
 }

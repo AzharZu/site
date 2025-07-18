@@ -21,6 +21,7 @@ import {
   Filter,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { BottomNavigation } from "@/components/navigation/bottom-nav"
 
 // Категории форума
 const FORUM_CATEGORIES = [
@@ -330,6 +331,7 @@ export default function ForumPage() {
           </div>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   )
 }

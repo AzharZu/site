@@ -28,82 +28,93 @@ export function AuthForm() {
   }
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
-    // Симуляция регистрации
-    setTimeout(() => {
-      setIsLoading(false)
-      router.push("/profile-setup")
-    }, 1500)
-  }
+    // Получаем значения из формы
+    const form = e.target as HTMLFormElement;
+    const firstName = (form.elements.namedItem("firstName") as HTMLInputElement)?.value;
+    const lastName = (form.elements.namedItem("lastName") as HTMLInputElement)?.value;
+    const age = (form.elements.namedItem("age") as HTMLInputElement)?.value;
+    const email = (form.elements.namedItem("registerEmail") as HTMLInputElement)?.value;
+    const password = (form.elements.namedItem("registerPassword") as HTMLInputElement)?.value;
+
+    try {
+      const res = await fetch("https://skilllink-backend-qbsv.onrender.com/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          age: Number(age),
+          email,
+          password,
+        }),
+      });
+      if (!res.ok) throw new Error("Ошибка регистрации");
+      // Сохраняем имя для приветствия в профиле
+      if (typeof window !== "undefined") {
+        localStorage.setItem("userFirstName", firstName);
+      }
+      setIsLoading(false);
+      router.push("/profile-setup");
+    } catch (err) {
+      setIsLoading(false);
+      alert("Ошибка регистрации. Попробуйте еще раз.");
+    }
+  };
 
   return (
     <Tabs defaultValue="login" className="w-full">
-      <TabsList className="grid w-full grid-cols-2 bg-gray-100">
-        <TabsTrigger value="login" className="data-[state=active]:ignite-gradient data-[state=active]:text-white">
-          Вход 🚀
+      <TabsList className="grid w-full grid-cols-2 bg-neutral-100">
+        <TabsTrigger value="login" className="data-[state=active]:bg-neutral-800 data-[state=active]:text-white rounded-md">
+          Вход
         </TabsTrigger>
-        <TabsTrigger value="register" className="data-[state=active]:pride-gradient data-[state=active]:text-white">
-          Регистрация ✨
+        <TabsTrigger value="register" className="data-[state=active]:bg-neutral-800 data-[state=active]:text-white rounded-md">
+          Регистрация
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="login">
-        <Card className="border-0 shadow-none">
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="flex items-center justify-center gap-2 text-xl">
-              <Users className="w-6 h-6 text-orange-500" />С возвращением! 👋
+        <Card className="border bg-white max-w-md mx-auto shadow-sm rounded-2xl">
+          <CardHeader className="text-center pb-2">
+            <CardTitle className="text-2xl font-bold text-neutral-900 mb-1">
+              Вход
             </CardTitle>
-            <CardDescription className="text-base">Заходи и учись с друзьями</CardDescription>
+            <CardDescription className="text-base text-neutral-500">Войдите в свой аккаунт</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-base font-medium">
+            <form onSubmit={handleLogin} className="space-y-7">
+              <div className="space-y-1">
+                <Label htmlFor="email" className="text-base font-medium text-neutral-700">
                   Email
                 </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="твой@email.com"
-                    className="pl-11 h-12 text-base rounded-xl border-2 focus:border-purple-400"
-                    required
-                  />
-                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
+                  required
+                />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-base font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="password" className="text-base font-medium text-neutral-700">
                   Пароль
                 </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="pl-11 pr-11 h-12 text-base rounded-xl border-2 focus:border-purple-400"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
+                  required
+                />
               </div>
-
               <Button
                 type="submit"
-                className="w-full h-12 text-base font-semibold ignite-gradient hover:opacity-90 rounded-xl"
+                className="w-full h-14 text-lg font-semibold bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg mt-2"
                 disabled={isLoading}
               >
-                {isLoading ? "Входим... 🔄" : "Войти 🎯"}
+                {isLoading ? "Входим..." : "Войти"}
               </Button>
             </form>
           </CardContent>
@@ -111,119 +122,89 @@ export function AuthForm() {
       </TabsContent>
 
       <TabsContent value="register">
-        <Card className="border-0 shadow-none">
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="flex items-center justify-center gap-2 text-xl">
-              <User className="w-6 h-6 text-orange-500" />
-              Присоединяйся! 🎉
+        <Card className="border bg-white max-w-md mx-auto shadow-sm rounded-2xl">
+          <CardHeader className="text-center pb-2">
+            <CardTitle className="text-2xl font-bold text-neutral-900 mb-1">
+              Регистрация
             </CardTitle>
-            <CardDescription className="text-base">Создай аккаунт и начни учиться</CardDescription>
+            <CardDescription className="text-base text-neutral-500">Создайте новый аккаунт</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleRegister} className="space-y-5">
+            <form onSubmit={handleRegister} className="space-y-7">
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-base font-medium">
+                <div className="space-y-1">
+                  <Label htmlFor="firstName" className="text-base font-medium text-neutral-700">
                     Имя
                   </Label>
                   <Input
                     id="firstName"
-                    placeholder="Иван"
-                    className="h-12 text-base rounded-xl border-2 focus:border-pink-400"
+                    name="firstName"
+                    placeholder="Имя"
+                    className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
                     required
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName" className="text-base font-medium">
+                <div className="space-y-1">
+                  <Label htmlFor="lastName" className="text-base font-medium text-neutral-700">
                     Фамилия
                   </Label>
                   <Input
                     id="lastName"
-                    placeholder="Иванов"
-                    className="h-12 text-base rounded-xl border-2 focus:border-pink-400"
+                    name="lastName"
+                    placeholder="Фамилия"
+                    className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
                     required
                   />
                 </div>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="age" className="text-base font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="age" className="text-base font-medium text-neutral-700">
                   Возраст
                 </Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    id="age"
-                    type="number"
-                    min="13"
-                    max="19"
-                    placeholder="16"
-                    className="pl-11 h-12 text-base rounded-xl border-2 focus:border-pink-400"
-                    required
-                  />
-                </div>
-                <p className="text-sm text-gray-500">Только для подростков 13-19 лет</p>
+                <Input
+                  id="age"
+                  name="age"
+                  type="number"
+                  min="13"
+                  max="19"
+                  placeholder="16"
+                  className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
+                  required
+                />
+                <p className="text-sm text-neutral-400 mt-1">Только для подростков 13-19 лет</p>
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="registerEmail" className="text-base font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="registerEmail" className="text-base font-medium text-neutral-700">
                   Email
                 </Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    id="registerEmail"
-                    type="email"
-                    placeholder="твой@email.com"
-                    className="pl-11 h-12 text-base rounded-xl border-2 focus:border-pink-400"
-                    required
-                  />
-                </div>
+                <Input
+                  id="registerEmail"
+                  name="registerEmail"
+                  type="email"
+                  placeholder="you@example.com"
+                  className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
+                  required
+                />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="registerPassword" className="text-base font-medium">
+              <div className="space-y-1">
+                <Label htmlFor="registerPassword" className="text-base font-medium text-neutral-700">
                   Пароль
                 </Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-                  <Input
-                    id="registerPassword"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="pl-11 pr-11 h-12 text-base rounded-xl border-2 focus:border-pink-400"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
-                  </button>
-                </div>
+                <Input
+                  id="registerPassword"
+                  name="registerPassword"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="h-14 text-lg rounded-lg border border-neutral-200 focus:border-neutral-400 bg-neutral-50 px-4"
+                  required
+                />
               </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-xl">🛡️</span>
-                  <div>
-                    <p className="text-sm font-medium text-blue-800">Правила безопасности:</p>
-                    <ul className="text-xs text-blue-700 mt-1 space-y-1">
-                      <li>• Не делись личной информацией</li>
-                      <li>• Встречайся только в общественных местах</li>
-                      <li>• Сообщай о неподобающем поведении</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
               <Button
                 type="submit"
-                className="w-full h-12 text-base font-semibold pride-gradient hover:opacity-90 rounded-xl"
+                className="w-full h-14 text-lg font-semibold bg-neutral-800 hover:bg-neutral-700 text-white rounded-lg mt-2"
                 disabled={isLoading}
               >
-                {isLoading ? "Создаем... 🔄" : "Создать аккаунт 🚀"}
+                {isLoading ? "Создаем..." : "Создать аккаунт"}
               </Button>
             </form>
           </CardContent>
