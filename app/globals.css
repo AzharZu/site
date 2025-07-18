@@ -10,7 +10,7 @@
     --card-foreground: 0 0% 9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
-    --primary: 0 0% 20%;
+    --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 9%;
@@ -23,7 +23,7 @@
     --border: 0 0% 89%;
     --input: 0 0% 89%;
     --ring: 0 0% 20%;
-    --radius: 0.5rem;
+    --radius: 0.25rem;
   }
 
   .dark {
@@ -58,28 +58,71 @@
   }
 }
 
-/* Минималистичные нейтральные стили */
-.minimal-bg {
+/* Минималистичные стили для монохромного дизайна */
+.minimal-card {
   background: #ffffff;
   border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  box-shadow: none;
 }
 
-.minimal-secondary {
-  background: #f8f8f8;
+.minimal-card:hover {
+  border-color: #d0d0d0;
+}
+
+.minimal-button {
+  background: #ffffff;
+  border: 1px solid #000000;
+  color: #000000;
+  border-radius: 0.25rem;
+  box-shadow: none;
+}
+
+.minimal-button:hover {
+  background: #f5f5f5;
+}
+
+.minimal-stat-card {
+  background: #fafafa;
   border: 1px solid #e0e0e0;
+  border-radius: 0.25rem;
+  padding: 1rem;
+  text-align: center;
 }
 
-.minimal-accent {
-  background: #f0f0f0;
-  border: 1px solid #d0d0d0;
+.minimal-activity-item {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.25rem;
+  padding: 0.75rem;
 }
 
 .minimal-text {
-  color: #333333;
+  color: #1a1a1a;
 }
 
 .minimal-muted {
   color: #666666;
+}
+
+.minimal-border {
+  border: 1px solid #e5e5e5;
+}
+
+/* Переопределяем любые градиенты на монохромные стили */
+.ignite-gradient,
+.learning-gradient,
+.pride-gradient,
+.knowledge-gradient {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.ignite-gradient:hover,
+.learning-gradient:hover,
+.pride-gradient:hover,
+.knowledge-gradient:hover {
+  background: #333333 !important;
 }
 
 /* Анимации для карточек */
